@@ -46,7 +46,7 @@ PDF Generation: FPDF / ReportLab
 bash
 Copy
 Edit
-git clone https://github.com/your-username/traffic-monitoring.git
+git clone (https://github.com/venkat-004/AI-Powered-Traffic-Management-and-Vehicle-Speed-Estimation-System.git)
 cd traffic-monitoring
 2️⃣ Create a virtual environment (optional but recommended)
 bash
