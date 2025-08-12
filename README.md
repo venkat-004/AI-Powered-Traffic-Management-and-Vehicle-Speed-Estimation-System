@@ -1,45 +1,149 @@
-# AI-Powered-Traffic-Management-and-Vehicle-Speed-Estimation-System
-AI-powered traffic monitoring system using YOLOv8 to detect, classify, and track vehicles in real time. Estimates speed via pixel-to-real-world conversion and overlays results on video. Supports live or recorded feeds, saves annotated outputs, and aids in traffic law enforcement, safety, and smart city planning.
-# Traffic Object Detection and PDF Generation
+🚗 AI-Powered Vehicle Detection, Speed Estimation & Traffic Reporting
+📌 Project Overview
+This project implements an AI-based traffic monitoring system using YOLOv8 and ByteTrack to detect, classify, and track vehicles in real time from video or live camera feeds. It estimates vehicle speeds, counts vehicles crossing lanes, and generates PDF reports summarizing traffic statistics.
 
-This project combines real-time traffic object detection using YOLOv8 and PDF generation from text input using Flask.
+The system is ideal for smart city applications, traffic enforcement, and transportation analytics.
 
-## Features
+🎯 Features
+✅ Real-time vehicle detection using YOLOv8
+✅ Vehicle classification (Car, Truck, Bus, Bike, etc.)
+✅ Persistent tracking with ByteTrack for unique vehicle IDs
+✅ Lane-specific counting for traffic monitoring
+✅ Speed estimation based on pixel-to-real distance mapping
+✅ Automatic PDF report generation with detailed stats
+✅ Output video with annotations (ID, speed, vehicle type)
 
-### Real-time Object Detection
+📂 Output Files
+output_video.mp4 – Annotated processed video
 
-- Utilizes YOLOv8 for detecting vehicles (cars, trucks, buses, motorbikes) in a video feed or video file.
-- Tracks detected objects using SORT (Simple Online and Realtime Tracking) algorithm.
-- Counts and records the number of vehicles crossing a specified line in the video frame.
-- Displays real-time count of vehicles detected on the video stream.
+traffic_report.pdf – Generated traffic statistics report
 
-## Setup and Usage
+Sample PDF Contents:
 
-### Prerequisites
+Date & Time of recording
 
-- Python 3.x
-- OpenCV (cv2)
-- cvzone
-- Sort (Simple Online and Realtime Tracking)
+Total vehicle count
 
-### Installation
+Count by vehicle type
 
-1. Clone the repository:
+Average speed by type
 
-   ```bash
-   git clone <repository_url>
-   cd <repository_name>
-2. Install dependencies:
-3. Running the application
-   ```bash
-    python tf.py
+Lane-specific statistics
 
-##Usage
-Real-time Object Detection:
+🛠 Tech Stack
+Language: Python 3.8+
 
-- Open the video feed or upload a video file (video3.mp4).
-- Detects and tracks vehicles specified in classNames.
-- Counts vehicles crossing the specified line (limits) and logs into traffic_jam.txt.
+Detection: YOLOv8
 
-Contributing
-Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
+Tracking: ByteTrack
+
+Video Processing: OpenCV
+
+PDF Generation: FPDF / ReportLab
+
+📦 Installation
+1️⃣ Clone the repository
+bash
+Copy
+Edit
+git clone https://github.com/your-username/traffic-monitoring.git
+cd traffic-monitoring
+2️⃣ Create a virtual environment (optional but recommended)
+bash
+Copy
+Edit
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+3️⃣ Install dependencies
+bash
+Copy
+Edit
+pip install ultralytics opencv-python fpdf filterpy lap onnxruntime
+📊 Dataset
+You can use:
+
+Custom dataset (annotated with vehicle classes)
+
+Public datasets like:
+
+UA-DETRAC
+
+BIT Vehicle Dataset
+
+If using a custom dataset:
+
+bash
+Copy
+Edit
+yolo task=detect mode=train data=custom.yaml model=yolov8n.pt epochs=50 imgsz=640
+🖥️ Usage
+1️⃣ Run detection, tracking & speed estimation
+bash
+Copy
+Edit
+python traffic_monitor.py --video input_video.mp4 --output output_video.mp4 --report traffic_report.pdf
+Arguments:
+
+--video → Input video file (or camera index)
+
+--output → Output annotated video
+
+--report → Output PDF report
+
+⚙️ How It Works
+Detection
+
+YOLOv8 detects vehicles frame-by-frame.
+
+Tracking
+
+ByteTrack assigns unique IDs to vehicles for consistent tracking.
+
+Lane Counting
+
+Predefined lane lines check when a vehicle crosses, triggering a count.
+
+Speed Estimation
+
+Speed is calculated from distance traveled between frames using FPS and scale factor (pixels to meters).
+
+PDF Report Generation
+
+FPDF creates a professional summary with counts, speed, and classifications.
+
+📄 Example PDF Report
+Traffic Report – 12 Aug 2025
+
+Total Vehicles: 78
+
+Cars: 54 | Avg Speed: 42 km/h
+
+Trucks: 12 | Avg Speed: 38 km/h
+
+Bikes: 8 | Avg Speed: 45 km/h
+
+Lane 1 Count: 60
+
+Lane 2 Count: 18
+
+
+📄 PDF Report
+After processing, a PDF report will be generated automatically in the reports/ folder containing:
+
+Sample PDF Layout
+Vehicle ID	Type	Lane	Speed (km/h)	Timestamp
+1	Car	2	58	00:00:12
+2	Truck	1	42	00:00:15
+3	Bike	3	65	00:00:17
+...	...	...	...	...
+
+
+🔮 Future Enhancements
+License Plate Recognition (ANPR)
+
+Violation detection (Red-light jumping, Overspeeding)
+
+Cloud dashboard integration
+
+Live traffic analytics API
